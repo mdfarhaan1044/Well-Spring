@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Recommendation</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='recipe.css') }}">
+</head>
+
+<div class="header">
+    <div class="logo"><a href="/">WellSpring</a> </div>
+    <nav class="nav">
+        <ul class="nav-links">
+            
+            <li><a href="/diet-and-workout">Diet and Fitness Planner</a></li>
+            <li><a href="/recipe-recommendation" class="btn">Recipe Recommendations</a></li>
+        </ul>
+    </nav>
+</div>
+
+<body>
+    <div class="container">
+        <h1 class="mt-5 text-center">Recipe Recommendation System</h1>
+        <div class="form-container">
+            <form action="/recipe" method="post" class="mt-4">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="calories">Calories</label>
+                        <input type="number" class="form-control" id="calories" name="calories" step="any" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="fat">Fat</label>
+                        <input type="number" class="form-control" id="fat" name="fat" step="any" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="carbohydrates">Carbohydrates</label>
+                        <input type="number" class="form-control" id="carbohydrates" name="carbohydrates" step="any"
+                            required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="protein">Protein</label>
+                        <input type="number" class="form-control" id="protein" name="protein" step="any" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="cholesterol">Cholesterol</label>
+                        <input type="number" class="form-control" id="cholesterol" name="cholesterol" step="any"
+                            required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="sodium">Sodium</label>
+                        <input type="number" class="form-control" id="sodium" name="sodium" step="any" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="fiber">Fiber</label>
+                    <input type="number" class="form-control" id="fiber" name="fiber" step="any" required>
+                </div>
+                <div class="form-group">
+                    <label for="ingredients">Ingredients</label>
+                    <input type="text" class="form-control" id="ingredients" name="ingredients" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Get Recommendations</button>
+            </form>
+        </div>
+
+        {% if recommendations %}
+        <div class="mt-5">
+            <h2>Recommended Recipes</h2>
+            <div class="row">
+                {% for recipe in recommendations %}
+                <div class="col-md-4">
+                    <div class="card recipe-card">
+                        <img class="card-img-top recipe-image" src="{{ recipe['image_url'] }}"
+                            alt="{{ recipe['recipe_name'] }}">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{{ recipe['youtube_link'] | e }}" target="_blank">{{ recipe['recipe_name']
+                                    }}</a>
+                            </h5>
+                            <ul class="card-text">
+                                {% for ingredient in recipe['ingredients_list'] %}
+                                <li>{{ ingredient }}</li>
+                                {% endfor %}
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        window.onscroll = function () {
+            var navbar = document.querySelector('.navbar');
+            if (window.pageYOffset > 0) {
+                navbar.style.display = 'none';
+            } else {
+                navbar.style.display = 'block';
+            }
+        };
+    </script>
+</body>
+
+</html>

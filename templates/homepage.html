@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WellSpring</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+   
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo"><a href="/">WellSpring</a> </div>
+            <nav class="nav">
+                <ul class="nav-links">
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="/diet-and-workout" class="btn">Get Started</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="home">
+            <div class="home-content">
+                <h1>Get Your Health a Boost</h1>
+                <p>Your all-in-one source for balanced living.  WellSpring provides expert-crafted diet plans, fitness routines, and delicious recipes to nourish your body and mind. </p>
+                <a href="/diet-and-workout" class="btn">Get Started</a>
+                <!-- <a href="#"> <img src="play-icon.png" alt="Play Icon"> Watch Video</a>  -->
+            
+            </div>
+            <div class="home-image">
+                <img src="{{ url_for('static', filename='home.png') }}" alt="Home Image">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

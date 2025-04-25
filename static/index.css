@@ -1,0 +1,198 @@
+ * {
+     box-sizing: border-box;
+ }
+
+ body {
+     font-family: Arial, sans-serif;
+     /* background-image: url('resized_background_image.png'); */
+     background-size: cover;
+     background-repeat: no-repeat;
+     background-position: center;
+     background: linear-gradient(to bottom, #1F1C2C, #928DAB);
+     color: white;
+     margin: 0;
+     /* height: 100vh;
+     overflow: hidden;
+     padding: 20px; */
+ }
+ .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: white
+}
+
+.nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.nav li {
+    margin-left: 20px;
+}
+.nav-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    }
+ .container::-webkit-scrollbar {
+     display: none;
+ }
+
+ .container {
+     max-width: 800px;
+     margin: auto;
+     height: 100%;
+     overflow-y: auto;
+     padding: 20px 50px;
+     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);
+     border-radius: 8px;
+     -ms-overflow-style: none;
+     scrollbar-width: none;
+     backdrop-filter: blur(100px);
+ }
+
+ h2 {
+     color: #4A90E2;
+ }
+
+ label {
+     display: block;
+     margin: 15px 0 5px;
+     font-weight: bold;
+ }
+
+ input,
+ select {
+     width: 100%;
+     padding: 10px;
+     margin: 5px 0 15px;
+     border: 1px solid #ccc;
+     border-radius: 40px;
+ }
+
+
+ button {
+     width: 100%;
+     padding: 10px;
+     color: white;
+     border: none;
+     border-radius: 4px;
+     font-size: 16px;
+     cursor: pointer;
+     margin-top: 10px;
+     border-radius: 40px;
+     background: linear-gradient(to right, #780206, #061161, #19547b, #ffd89b);
+ }
+
+
+ button:hover {
+     background-color: #357ABD;
+ }
+
+ .result-buttons {
+     display: flex;
+     flex-direction: column;
+     margin-top: 20px;
+ }
+
+ .result-buttons button {
+     margin-bottom: 10px;
+ }
+
+ .modal {
+     display: none;
+     /* Hidden by default */
+     position: fixed;
+     /* Stay in place */
+     z-index: 1;
+     /* Sit on top */
+     left: 0;
+     top: 0;
+     width: 100%;
+     /* Full width */
+     height: 100%;
+     /* Full height */
+     overflow: auto;
+     /* Enable scroll if needed */
+     background-color: rgb(0, 0, 0);
+     /* Fallback color */
+     background-color: rgba(0, 0, 0, 0.4);
+     /* Black w/ opacity */
+     padding-top: 60px;
+     /* Location of the box */
+ }
+
+ .modal-content {
+     backdrop-filter: blur(50px);
+     margin: 5% auto;
+     /* 15% from the top and centered */
+     padding: 20px;
+     border: 1px solid #888;
+     width: 80%;
+     border-radius: 15px;
+     /* Could be more or less, depending on screen size */
+ }
+
+ .close {
+     color: #aaa;
+     float: right;
+     font-size: 28px;
+     font-weight: bold;
+ }
+
+ .close:hover,
+ .close:focus {
+     color: black;
+     text-decoration: none;
+     cursor: pointer;
+ }
+
+ ul {
+     list-style-type: none;
+     padding: 0;
+ }
+
+ ul li {
+     padding: 5px 0;
+     font-size: 16px;
+ }
+
+ ul {
+     list-style-type: none;
+     margin: 0;
+     padding: 0;
+     overflow: hidden;
+     background-color: transparent;
+ }
+
+ li {
+     float: left;
+ }
+
+ li a {
+     display: block;
+     color: white;
+     text-align: center;
+     padding: 14px 16px;
+     text-decoration: none;
+ }
+
+ /* Change the link color to #111 (black) on hover */
+ li a:hover {
+     background-color: #111;
+ }
+ a{
+    color: white;
+    text-decoration: none;
+    
+}
