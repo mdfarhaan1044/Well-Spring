@@ -133,7 +133,7 @@ def recommendations():
 
                 
 
-        print("dict : ", recommendations)
+        # print("dict : ", recommendations)
         return render_template('recommendation.html', recommendations=recommendations)
     
     # @app.route('/', methods=['GET', 'POST'])
