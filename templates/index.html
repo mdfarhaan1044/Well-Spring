@@ -125,25 +125,26 @@
             <form action="/recommendations" method="POST" class="space-y-4 md:space-y-6">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                     <div>
-                        <label for="user_age" class="block text-xs md:text-sm font-medium text-gray-700">Age</label>
+                        <label for="user_age" class="block text-xs md:text-sm font-medium text-gray-700">Age<span
+                                style="color: red;">&ast;</span></label>
                         <input type="number" id="user_age" name="user_age"
                             class="w-full p-2 md:p-3 border rounded-lg input-focus" required>
                     </div>
                     <div>
                         <label for="user_height" class="block text-xs md:text-sm font-medium text-gray-700">Height
-                            (cm)</label>
+                            (cm)<span style="color: red;">&ast;</span></label>
                         <input type="number" id="user_height" name="user_height"
                             class="w-full p-2 md:p-3 border rounded-lg input-focus" required>
                     </div>
                     <div>
                         <label for="user_weight" class="block text-xs md:text-sm font-medium text-gray-700">Weight
-                            (kg)</label>
+                            (kg)<span style="color: red;">&ast;</span></label>
                         <input type="number" id="user_weight" name="user_weight"
                             class="w-full p-2 md:p-3 border rounded-lg input-focus" required>
                     </div>
                     <div>
-                        <label for="user_gender"
-                            class="block text-xs md:text-sm font-medium text-gray-700">Gender</label>
+                        <label for="user_gender" class="block text-xs md:text-sm font-medium text-gray-700">Gender<span
+                                style="color: red;">&ast;</span></label>
                         <select id="user_gender" name="user_gender"
                             class="w-full p-2 md:p-3 border rounded-lg input-focus" required>
                             <option value="male">Male</option>
@@ -154,16 +155,17 @@
                 </div>
                 <div>
                     <label for="dietary_preferences" class="block text-xs md:text-sm font-medium text-gray-700">Dietary
-                        Preferences</label>
+                        Preferences<span style="color: red;">&ast;</span></label>
                     <input type="text" id="dietary_preferences" name="dietary_preferences"
-                        class="w-full p-2 md:p-3 border rounded-lg input-focus" placeholder="e.g., vegetarian, keto">
+                        class="w-full p-2 md:p-3 border rounded-lg input-focus"
+                        placeholder="e.g., vegetarian, non-vegetarian" required>
                 </div>
                 <div>
                     <label for="fitness_goals" class="block text-xs md:text-sm font-medium text-gray-700">Fitness
-                        Goals</label>
+                        Goals<span style="color: red;">&ast;</span></label>
                     <input type="text" id="fitness_goals" name="fitness_goals"
                         class="w-full p-2 md:p-3 border rounded-lg input-focus"
-                        placeholder="e.g., weight loss, muscle gain">
+                        placeholder="e.g., weight loss, muscle gain" required>
                 </div>
                 <div>
                     <label for="lifestyle_factors" class="block text-xs md:text-sm font-medium text-gray-700">Lifestyle
