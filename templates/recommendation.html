@@ -4,137 +4,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recommendations</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
-
-</head>
-
-<div class="header">
-    <div class="logo"><a href="/">WellSpring</a> </div>
-    <nav class="nav">
-        <ul class="nav-links">
-            
-            <li><a href="/diet-and-workout">Diet and Fitness Planner</a></li>
-            <li><a href="/recipe-recommendation" class="btn">Recipe Recommendations</a></li>
-        </ul>
-    </nav>
-</div>
-
-<body>
-
-
-
-    <div class="container">
-        {% if recommendations %}
-        <h2>Recommendations</h2>
-
-
-        <div class="result-buttons">
-            <button onclick="showModal('dietModal')">View Diet Types</button>
-            <button onclick="showModal('workoutModal')">View Workout Options</button>
-            <button onclick="showModal('breakfastModal')">View Breakfast Ideas</button>
-            <button onclick="showModal('dinnerModal')">View Dinner Options</button>
-            <button onclick="showModal('tipsModal')">View Additional Tips</button>
-            <button onclick="showModal('nutrientsModal')">Nutrients required</button>
-        </div>
-        {% endif %}
-    </div>
-
-    <div id="dietModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('dietModal')">&times;</span>
-            <h3>Diet Types</h3>
-            <ul>
-                {% for diet in recommendations.diet_types %}
-                <li>{{ diet }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-
-    <div id="workoutModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('workoutModal')">&times;</span>
-            <h3>Workout Options</h3>
-            <ul>
-                {% for workout in recommendations.workouts %}
-                <li>{{ workout }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-
-    <div id="breakfastModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('breakfastModal')">&times;</span>
-            <h3>Breakfast Ideas</h3>
-            <ul>
-                {% for breakfast in recommendations.breakfasts %}
-                <li>{{ breakfast }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-
-    <div id="dinnerModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('dinnerModal')">&times;</span>
-            <h3>Dinner Options</h3>
-            <ul>
-                {% for dinner in recommendations.dinners %}
-                <li>{{ dinner }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-
-    <div id="tipsModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('tipsModal')">&times;</span>
-            <h3>Additional Tips</h3>
-            <ul>
-                {% for tip in recommendations.additional_tips %}
-                <li>{{ tip }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-    <div id="nutrientsModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('nutrientsModal')">&times;</span>
-            <h3>Nutrient Values</h3>
-            <ul>
-                {% for nutrient in recommendations.nutrient_value %}
-                <li>{{ nutrient }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-
-    <script>
-        function showModal(modalId) {
-            document.getElementById(modalId).style.display = "block";
-
-
+    <title>Your Fitness Plan - WellSpring</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
         }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = "none";
-
-
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        // Close modals when clicking outside of them
-        window.onclick = function (event) {
-            const modals = document.getElementsByClassName("modal");
-            for (let i = 0; i < modals.length; i++) {
-                if (event.target == modals[i]) {
-                    modals[i].style.display = "none";
-                }
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
-    </script>
 
+        .bg-coral-500 {
+            background-color: #f87171;
+        }
+
+        .hover\:bg-coral-400:hover {
+            background-color: #fb7185;
+        }
+
+        .text-coral-500 {
+            color: #f87171;
+        }
+
+        .hover\:text-coral-400:hover {
+            color: #fb7185;
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: #10b981;
+                padding: 1rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .nav-links a {
+                padding: 0.5rem 0;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-ivory-100">
+    <!-- Navigation Bar -->
+    <nav class="bg-emerald-600 text-white p-4 sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <h1 class="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">WellSpring</h1>
+            <button class="menu-toggle md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
+                </svg>
+            </button>
+            <div class="nav-links flex space-x-6 md:space-x-8 lg:space-x-10 md:flex">
+                <a href="/"
+                    class="hover:text-coral-500 transition duration-300 text-sm md:text-base lg:text-lg">Home</a>
+                <a href="/diet-and-workout"
+                    class="hover:text-coral-500 transition duration-300 text-sm md:text-base lg:text-lg">Fitness
+                    Plan</a>
+                <a href="/recipe-recommendation"
+                    class="hover:text-coral-500 transition duration-300 text-sm md:text-base lg:text-lg">Recipe
+                    Finder</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Recommendations Section -->
+    <section class="py-12 md:py-16 lg:py-20 bg-ivory-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8 text-center text-emerald-800 fade-in">
+                Your Custom Fitness Roadmap</h2>
+            {% if recommendations %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                <div class="bg-white p-4 md:p-6 rounded-xl card-hover fade-in">
+                    <h3 class="text-base md:text-lg lg:text-xl font-semibold mb-3 md:mb-4 text-emerald-700">Diet
+                        Recommendations</h3>
+                    <ul class="list-disc pl-5 text-gray-600 text-xs md:text-sm lg:text-base">
+                        {% for diet in recommendations.diet_types %}
+                        <li>{{ diet }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="bg-white p-4 md:p-6 rounded-xl card-hover fade-in">
+                    <h3 class="text-base md:text-lg lg:text-xl font-semibold mb-3 md:mb-4 text-emerald-700">Workout
+                        Options</h3>
+                    <ul class="list-disc pl-5 text-gray-600 text-xs md:text-sm lg:text-base">
+                        {% for workout in recommendations.workouts %}
+                        <li>{{ workout }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="bg-white p-4 md:p-6 rounded-xl card-hover fade-in">
+                    <h3 class="text-base md:text-lg lg:text-xl font-semibold mb-3 md:mb-4 text-emerald-700">Breakfast
+                        Ideas</h3>
+                    <ul class="list-disc pl-5 text-gray-600 text-xs md:text-sm lg:text-base">
+                        {% for breakfast in recommendations.breakfasts %}
+                        <li>{{ breakfast }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="bg-white p-4 md:p-6 rounded-xl card-hover fade-in">
+                    <h3 class="text-base md:text-lg lg:text-xl font-semibold mb-3 md:mb-4 text-emerald-700">Dinner
+                        Options</h3>
+                    <ul class="list-disc pl-5 text-gray-600 text-xs md:text-sm lg:text-base">
+                        {% for dinner in recommendations.dinners %}
+                        <li>{{ dinner }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="bg-white p-4 md:p-6 rounded-xl card-hover fade-in">
+                    <h3 class="text-base md:text-lg lg:text-xl font-semibold mb-3 md:mb-4 text-emerald-700">Additional
+                        Tips</h3>
+                    <ul class="list-disc pl-5 text-gray-600 text-xs md:text-sm lg:text-base">
+                        {% for tip in recommendations.additional_tips %}
+                        <li>{{ tip }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="bg-white p-4 md:p-6 rounded-xl card-hover fade-in">
+                    <h3 class="text-base md:text-lg lg:text-xl font-semibold mb-3 md:mb-4 text-emerald-700">Nutrient
+                        Values</h3>
+                    <ul class="list-disc pl-5 text-gray-600 text-xs md:text-sm lg:text-base">
+                        {% for nutrient in recommendations.nutrient_value %}
+                        <li>{{ nutrient }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% else %}
+            <p class="text-center text-gray-600 text-base md:text-lg">No recommendations available. Submit your details
+                to get started!</p>
+            {% endif %}
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="bg-emerald-800 text-white p-4 md:p-6">
+        <div class="container mx-auto text-center px-4">
+            <p class="text-xs md:text-sm">© 2025 WellSpring. Built with 🌿 for a vibrant world.</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    </script>
 </body>
 
 </html>

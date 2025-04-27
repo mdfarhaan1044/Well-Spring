@@ -4,160 +4,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Health and Wellness Assistant</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <title>Fitness Plan - WellSpring</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
 
+        .form-bg {
+            background: linear-gradient(135deg, #f87171 0%, #10b981 100%);
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
 
+        .input-focus {
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
 
+        .input-focus:focus {
+            border-color: #f87171;
+            box-shadow: 0 0 10px rgba(248, 113, 113, 0.5);
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bg-coral-500 {
+            background-color: #f87171;
+        }
+
+        .hover\:bg-coral-400:hover {
+            background-color: #fb7185;
+        }
+
+        .text-coral-500 {
+            color: #f87171;
+        }
+
+        .hover\:text-coral-400:hover {
+            color: #fb7185;
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: #10b981;
+                padding: 1rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .nav-links a {
+                padding: 0.5rem 0;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 
-
-<div class="header">
-    <div class="logo"><a href="/">WellSpring</a> </div>
-    <nav class="nav">
-        <ul class="nav-links">
-            
-            <li><a href="/diet-and-workout">Diet and Fitness Planner</a></li>
-            <li><a href="/recipe-recommendation" class="btn">Recipe Recommendations</a></li>
-        </ul>
+<body class="bg-ivory-100">
+    <!-- Navigation Bar -->
+    <nav class="bg-emerald-600 text-white p-4 sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <h1 class="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">WellSpring</h1>
+            <button class="menu-toggle md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
+                </svg>
+            </button>
+            <div class="nav-links flex space-x-6 md:space-x-8 lg:space-x-10 md:flex">
+                <a href="/"
+                    class="hover:text-coral-500 transition duration-300 text-sm md:text-base lg:text-lg">Home</a>
+                <a href="/diet-and-workout"
+                    class="hover:text-coral-500 transition duration-300 text-sm md:text-base lg:text-lg">Fitness
+                    Plan</a>
+                <a href="/recipe-recommendation"
+                    class="hover:text-coral-500 transition duration-300 text-sm md:text-base lg:text-lg">Recipe
+                    Finder</a>
+            </div>
+        </div>
     </nav>
-</div>
 
+    <!-- Form Section -->
+    <section class="form-bg py-14 md:py-16 lg:py-20">
+        <div
+            class="container mx-auto max-w-lg md:max-w-xl lg:max-w-2xl bg-white p-4 md:p-6 lg:p-10 rounded-2xl shadow-xl fade-in">
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8 text-center text-emerald-800">Build Your
+                Fitness Plan</h2>
+            <form action="/recommendations" method="POST" class="space-y-4 md:space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                    <div>
+                        <label for="user_age" class="block text-xs md:text-sm font-medium text-gray-700">Age</label>
+                        <input type="number" id="user_age" name="user_age"
+                            class="w-full p-2 md:p-3 border rounded-lg input-focus" required>
+                    </div>
+                    <div>
+                        <label for="user_height" class="block text-xs md:text-sm font-medium text-gray-700">Height
+                            (cm)</label>
+                        <input type="number" id="user_height" name="user_height"
+                            class="w-full p-2 md:p-3 border rounded-lg input-focus" required>
+                    </div>
+                    <div>
+                        <label for="user_weight" class="block text-xs md:text-sm font-medium text-gray-700">Weight
+                            (kg)</label>
+                        <input type="number" id="user_weight" name="user_weight"
+                            class="w-full p-2 md:p-3 border rounded-lg input-focus" required>
+                    </div>
+                    <div>
+                        <label for="user_gender"
+                            class="block text-xs md:text-sm font-medium text-gray-700">Gender</label>
+                        <select id="user_gender" name="user_gender"
+                            class="w-full p-2 md:p-3 border rounded-lg input-focus" required>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="dietary_preferences" class="block text-xs md:text-sm font-medium text-gray-700">Dietary
+                        Preferences</label>
+                    <input type="text" id="dietary_preferences" name="dietary_preferences"
+                        class="w-full p-2 md:p-3 border rounded-lg input-focus" placeholder="e.g., vegetarian, keto">
+                </div>
+                <div>
+                    <label for="fitness_goals" class="block text-xs md:text-sm font-medium text-gray-700">Fitness
+                        Goals</label>
+                    <input type="text" id="fitness_goals" name="fitness_goals"
+                        class="w-full p-2 md:p-3 border rounded-lg input-focus"
+                        placeholder="e.g., weight loss, muscle gain">
+                </div>
+                <div>
+                    <label for="lifestyle_factors" class="block text-xs md:text-sm font-medium text-gray-700">Lifestyle
+                        Factors</label>
+                    <input type="text" id="lifestyle_factors" name="lifestyle_factors"
+                        class="w-full p-2 md:p-3 border rounded-lg input-focus" placeholder="e.g., sedentary, active">
+                </div>
+                <div>
+                    <label for="dietary_restrictions" class="block text-xs md:text-sm font-medium text-gray-700">Dietary
+                        Restrictions</label>
+                    <input type="text" id="dietary_restrictions" name="dietary_restrictions"
+                        class="w-full p-2 md:p-3 border rounded-lg input-focus"
+                        placeholder="e.g., gluten-free, nut allergy">
+                </div>
+                <div>
+                    <label for="health_conditions" class="block text-xs md:text-sm font-medium text-gray-700">Health
+                        Conditions</label>
+                    <input type="text" id="health_conditions" name="health_conditions"
+                        class="w-full p-2 md:p-3 border rounded-lg input-focus"
+                        placeholder="e.g., diabetes, hypertension">
+                </div>
+                <button type="submit"
+                    class="w-full bg-coral-500 text-white p-3 md:p-4 rounded-lg font-semibold hover:bg-coral-400 transition duration-300 text-sm md:text-base">Get
+                    Your Plan</button>
+            </form>
+        </div>
+    </section>
 
-<body>
-    <div class="container">
-        <h2>Personalized Diet & Workout Planner</h2>
-        <form action="/recommendations" method="POST">
-
-            <label>Age:</label>
-            <input type="text" name="user_age" placeholder="Enter your Age" maxlength="2" required>
-
-            <label>Height:</label>
-            <input type="text" name="user_height" placeholder="In cm" maxlength="3" required>
-
-            <label>Weight:</label>
-            <input type="text" name="user_weight" placeholder="In Kilograms" maxlength="3" required>
-
-            <label for="gender">Gender:</label>
-            <select id="gender" name="user_gender" required>
-                <option value="">Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-
-            </select>
-
-
-
-            <label>Dietary Preferences:</label>
-            <input type="text" name="dietary_preferences" placeholder="e.g., vegetarian, non-veg" required>
-
-            <label>Fitness Goals:</label>
-            <input type="text" name="fitness_goals" placeholder="e.g., weight loss, muscle gain">
-
-            <label>Lifestyle Factors:</label>
-            <input type="text" name="lifestyle_factors" placeholder="e.g., active, sedentary">
-
-            <label>Dietary Restrictions:</label>
-            <input type="text" name="dietary_restrictions" placeholder="e.g., gluten-free, lactose-intolerant">
-
-            <label>Health Conditions:</label>
-            <input type="text" name="health_conditions" placeholder="e.g., diabetes, high blood pressure">
-            <!-- 
-            <label>Your Query:</label>
-            <textarea name="user_query" placeholder="Describe your goal briefly" required></textarea> -->
-
-            <button type="submit">Get Recommendations</button>
-        </form>
-    </div>
+    <!-- Footer -->
+    <footer class="bg-emerald-800 text-white p-4 md:p-6">
+        <div class="container mx-auto text-center px-4">
+            <p class="text-xs md:text-sm">© 2025 WellSpring. Built with 🌿 for a vibrant world.</p>
+        </div>
+    </footer>
 
     <script>
-        window.onscroll = function () {
-            var navbar = document.querySelector('.navbar');
-            if (window.pageYOffset > 0) {
-                navbar.style.display = 'none';
-            } else {
-                navbar.style.display = 'block';
-            }
-        };
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
     </script>
-
-    <!-- <div id="results" class="container">
-        {% if recommendations %}
-        <h2>Recommendations</h2>
-
-
-        <div class="result-buttons">
-            <button onclick="showModal('dietModal')">View Diet Types</button>
-            <button onclick="showModal('workoutModal')">View Workout Options</button>
-            <button onclick="showModal('breakfastModal')">View Breakfast Ideas</button>
-            <button onclick="showModal('dinnerModal')">View Dinner Options</button>
-            <button onclick="showModal('tipsModal')">View Additional Tips</button>
-        </div>
-        {% endif %}
-    </div>
-
-    <div id="dietModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('dietModal')">&times;</span>
-            <h3>Diet Types</h3>
-            <ul>
-                {% for diet in recommendations.diet_types %}
-                <li>{{ diet }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-
-    <div id="workoutModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('workoutModal')">&times;</span>
-            <h3>Workout Options</h3>
-            <ul>
-                {% for workout in recommendations.workouts %}
-                <li>{{ workout }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-
-    <div id="breakfastModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('breakfastModal')">&times;</span>
-            <h3>Breakfast Ideas</h3>
-            <ul>
-                {% for breakfast in recommendations.breakfasts %}
-                <li>{{ breakfast }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-
-    <div id="dinnerModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('dinnerModal')">&times;</span>
-            <h3>Dinner Options</h3>
-            <ul>
-                {% for dinner in recommendations.dinners %}
-                <li>{{ dinner }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-
-    <div id="tipsModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('tipsModal')">&times;</span>
-            <h3>Additional Tips</h3>
-            <ul>
-                {% for tip in recommendations.additional_tips %}
-                <li>{{ tip }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div> -->
-
-
-
 </body>
 
 </html>

@@ -131,6 +131,8 @@ def recommendations():
             elif line.strip() and current_section:
                 recommendations[current_section].append(line.strip())
 
+                
+
         print("dict : ", recommendations)
         return render_template('recommendation.html', recommendations=recommendations)
     

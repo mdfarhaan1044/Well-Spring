@@ -4,111 +4,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe Recommendation</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='recipe.css') }}">
+    <title>Recipe Finder - WellSpring</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-bg {
+            background: linear-gradient(135deg, #f87171 0%, #10b981 100%);
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+
+        .input-focus {
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-focus:focus {
+            border-color: #f87171;
+            box-shadow: 0 0 10px rgba(248, 113, 113, 0.5);
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bg-coral-500 {
+            background-color: #f87171;
+        }
+
+        .hover\:bg-coral-400:hover {
+            background-color: #fb7185;
+        }
+
+        .text-coral-500 {
+            color: #f87171;
+        }
+
+        .hover\:text-coral-400:hover {
+            color: #fb7185;
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: #10b981;
+                padding: 1rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .nav-links a {
+                padding: 0.5rem 0;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 
-<div class="header">
-    <div class="logo"><a href="/">WellSpring</a> </div>
-    <nav class="nav">
-        <ul class="nav-links">
-            
-            <li><a href="/diet-and-workout">Diet and Fitness Planner</a></li>
-            <li><a href="/recipe-recommendation" class="btn">Recipe Recommendations</a></li>
-        </ul>
+<body class="bg-ivory-100">
+    <!-- Navigation Bar -->
+    <nav class="bg-emerald-600 text-white p-4 sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <h1 class="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">WellSpring</h1>
+            <button class="menu-toggle md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
+                </svg>
+            </button>
+            <div class="nav-links flex space-x-6 md:space-x-8 lg:space-x-10 md:flex">
+                <a href="/"
+                    class="hover:text-coral-500 transition duration-300 text-sm md:text-base lg:text-lg">Home</a>
+                <a href="/diet-and-workout"
+                    class="hover:text-coral-500 transition duration-300 text-sm md:text-base lg:text-lg">Fitness
+                    Plan</a>
+                <a href="/recipe-recommendation"
+                    class="hover:text-coral-500 transition duration-300 text-sm md:text-base lg:text-lg">Recipe
+                    Finder</a>
+            </div>
+        </div>
     </nav>
-</div>
 
-<body>
-    <div class="container">
-        <h1 class="mt-5 text-center">Recipe Recommendation System</h1>
-        <div class="form-container">
-            <form action="/recipe" method="post" class="mt-4">
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="calories">Calories</label>
-                        <input type="number" class="form-control" id="calories" name="calories" step="any" required>
+    <!-- Recipe Form Section -->
+    <section class="form-bg py-14 md:py-16 lg:py-20">
+        <div
+            class="container mx-auto max-w-lg md:max-w-xl lg:max-w-2xl bg-white p-4 md:p-6 lg:p-10 rounded-2xl shadow-xl fade-in">
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8 text-center text-emerald-800">Discover
+                Delicious Recipes</h2>
+            <form action="/recipe" method="POST" class="space-y-4 md:space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                    <div>
+                        <label for="calories"
+                            class="block text-xs md:text-sm font-medium text-gray-700">Calories</label>
+                        <input type="number" id="calories" name="calories"
+                            class="w-full p-2 md:p-3 border rounded-lg input-focus" required>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="fat">Fat</label>
-                        <input type="number" class="form-control" id="fat" name="fat" step="any" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="carbohydrates">Carbohydrates</label>
-                        <input type="number" class="form-control" id="carbohydrates" name="carbohydrates" step="any"
+                    <div>
+                        <label for="fat" class="block text-xs md:text-sm font-medium text-gray-700">Fat (g)</label>
+                        <input type="number" id="fat" name="fat" class="w-full p-2 md:p-3 border rounded-lg input-focus"
                             required>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="protein">Protein</label>
-                        <input type="number" class="form-control" id="protein" name="protein" step="any" required>
+                    <div>
+                        <label for="carbohydrates"
+                            class="block text-xs md:text-sm font-medium text-gray-700">Carbohydrates (g)</label>
+                        <input type="number" id="carbohydrates" name="carbohydrates"
+                            class="w-full p-2 md:p-3 border rounded-lg input-focus" required>
+                    </div>
+                    <div>
+                        <label for="protein" class="block text-xs md:text-sm font-medium text-gray-700">Protein
+                            (g)</label>
+                        <input type="number" id="protein" name="protein"
+                            class="w-full p-2 md:p-3 border rounded-lg input-focus" required>
+                    </div>
+                    <div>
+                        <label for="cholesterol" class="block text-xs md:text-sm font-medium text-gray-700">Cholesterol
+                            (mg)</label>
+                        <input type="number" id="cholesterol" name="cholesterol"
+                            class="w-full p-2 md:p-3 border rounded-lg input-focus" required>
+                    </div>
+                    <div>
+                        <label for="sodium" class="block text-xs md:text-sm font-medium text-gray-700">Sodium
+                            (mg)</label>
+                        <input type="number" id="sodium" name="sodium"
+                            class="w-full p-2 md:p-3 border rounded-lg input-focus" required>
+                    </div>
+                    <div>
+                        <label for="fiber" class="block text-xs md:text-sm font-medium text-gray-700">Fiber (g)</label>
+                        <input type="number" id="fiber" name="fiber"
+                            class="w-full p-2 md:p-3 border rounded-lg input-focus" required>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="cholesterol">Cholesterol</label>
-                        <input type="number" class="form-control" id="cholesterol" name="cholesterol" step="any"
-                            required>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="sodium">Sodium</label>
-                        <input type="number" class="form-control" id="sodium" name="sodium" step="any" required>
-                    </div>
+                <div>
+                    <label for="ingredients"
+                        class="block text-xs md:text-sm font-medium text-gray-700">Ingredients</label>
+                    <textarea id="ingredients" name="ingredients"
+                        class="w-full p-2 md:p-3 border rounded-lg input-focus"
+                        placeholder="e.g., chicken, broccoli, olive oil"></textarea>
                 </div>
-                <div class="form-group">
-                    <label for="fiber">Fiber</label>
-                    <input type="number" class="form-control" id="fiber" name="fiber" step="any" required>
-                </div>
-                <div class="form-group">
-                    <label for="ingredients">Ingredients</label>
-                    <input type="text" class="form-control" id="ingredients" name="ingredients" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Get Recommendations</button>
+                <button type="submit"
+                    class="w-full bg-coral-500 text-white p-3 md:p-4 rounded-lg font-semibold hover:bg-coral-400 transition duration-300 text-sm md:text-base">Find
+                    Recipes</button>
             </form>
         </div>
+    </section>
 
-        {% if recommendations %}
-        <div class="mt-5">
-            <h2>Recommended Recipes</h2>
-            <div class="row">
+    <!-- Recipe Results Section -->
+    {% if recommendations %}
+    <section class="py-12 md:py-16 lg:py-20 bg-ivory-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8 text-center text-emerald-800 fade-in">
+                Your Recipe Picks</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {% for recipe in recommendations %}
-                <div class="col-md-4">
-                    <div class="card recipe-card">
-                        <img class="card-img-top recipe-image" src="{{ recipe['image_url'] }}"
-                            alt="{{ recipe['recipe_name'] }}">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <a href="{{ recipe['youtube_link'] | e }}" target="_blank">{{ recipe['recipe_name']
-                                    }}</a>
-                            </h5>
-                            <ul class="card-text">
-                                {% for ingredient in recipe['ingredients_list'] %}
-                                <li>{{ ingredient }}</li>
-                                {% endfor %}
-                            </ul>
-
-                        </div>
-                    </div>
+                <div class="bg-white p-4 md:p-6 rounded-xl card-hover fade-in">
+                    <img src="{{ recipe.image_url }}" alt="{{ recipe.recipe_name }}"
+                        class="w-full h-32 md:h-40 lg:h-48 object-cover rounded-lg mb-3 md:mb-4">
+                    <h3 class="text-base md:text-lg lg:text-xl font-semibold mb-2 text-emerald-700">{{
+                        truncate(recipe.recipe_name, 30) }}</h3>
+                    <p class="text-gray-600 text-xs md:text-sm lg:text-base mb-3 md:mb-4">Ingredients:</p>
+                    <ol class="list-decimal pl-5 text-gray-600 text-xs md:text-sm lg:text-base mb-3 md:mb-4">
+                        {% if recipe.ingredients_list is string %}
+                        {% set ingredients = recipe.ingredients_list.strip('[]').replace("'", "").split(', ') %}
+                        {% for ingredient in ingredients %}
+                        <li>{{ ingredient|capitalize }}</li>
+                        {% endfor %}
+                        {% else %}
+                        {% for ingredient in recipe.ingredients_list %}
+                        <li>{{ ingredient|capitalize }}</li>
+                        {% endfor %}
+                        {% endif %}
+                    </ol>
+                    <a href="{{ recipe.youtube_link }}" target="_blank"
+                        class="text-coral-500 hover:text-coral-400 font-semibold text-sm md:text-base">Watch Recipe
+                        Video</a>
                 </div>
                 {% endfor %}
             </div>
         </div>
-        {% endif %}
-    </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    </section>
+    {% endif %}
+
+    <!-- Footer -->
+    <footer class="bg-emerald-800 text-white p-4 md:p-6">
+        <div class="container mx-auto text-center px-4">
+            <p class="text-xs md:text-sm">© 2025 WellSpring. Built with 🌿 for a vibrant world.</p>
+        </div>
+    </footer>
+
     <script>
-        window.onscroll = function () {
-            var navbar = document.querySelector('.navbar');
-            if (window.pageYOffset > 0) {
-                navbar.style.display = 'none';
-            } else {
-                navbar.style.display = 'block';
-            }
-        };
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
     </script>
 </body>
 
